@@ -11,7 +11,7 @@ struct Obj {
     Property<string, ReadWrite> strProperty;
 
     Obj() : intProperty(10, [] (const int& value) { cout << "read value: " << value << endl; }),
-            strProperty(string("value str"), nullptr, [] (const string& value) { cout << "write value: " << value << endl; }) {}
+            strProperty(string("value str"), [] (const string& value) {}, [] (const string& value) { cout << "write value: " << value << endl; }) {}
 
 };
 

@@ -24,14 +24,15 @@ namespace Properies {
 
         T value;
 
-        function<void(const T &)> on_read;
+        function<void(const T &)> on_read = NULL;
 
-        function<void(const T &)> on_write;
+        function<void(const T &)> on_write = NULL;
 
         void write(const T &value) {
             if (propertyType != ReadOnly) {
                 this->value = value;
-                on_write(value);
+                if (on_write != NULL)
+                    on_write(value);
             }
             else
                 throw new PropertyAccessException();
@@ -45,10 +46,15 @@ namespace Properies {
         }
 
         Property(const T &value,
-                 function<void(const T &)> on_read = nullptr,
-                 function<void(const T &)> on_write = nullptr) {
+                 function<void(const T &)> on_read) {
             this->value = value;
             setOnRead(on_read);
+        }
+
+        Property(const T &value,
+                 function<void(const T &)> on_read,
+                 function<void(const T &)> on_write) : Property(value, on_read) {
+            this->value = value;
             setOnWrite(on_write);
         }
 
