@@ -25,6 +25,7 @@ int main() {
     cout << obj.intProperty << endl;
 
     obj.strProperty = string("hello, world!");
+    obj.strProperty.setOnRead([] (const string& value) { cout << "read value: " << value << endl; });
     cout << (string)obj.strProperty << endl;
 
     /*
